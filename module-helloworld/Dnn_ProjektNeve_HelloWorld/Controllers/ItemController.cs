@@ -25,7 +25,7 @@ namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
     [DnnHandleError]
     public class ItemController : DnnController
     {
-
+        
         public ActionResult Delete(int itemId)
         {
             ItemManager.Instance.DeleteItem(itemId, ModuleContext.ModuleId);
