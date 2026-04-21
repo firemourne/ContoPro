@@ -14,7 +14,7 @@
     <RootNamespace>ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld</RootNamespace>
     <AssemblyName>Dnn_ProjektNeve_HelloWorld</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -178,9 +178,7 @@
           <DevelopmentServerPort>54951</DevelopmentServerPort>
           <DevelopmentServerVPath>
           </DevelopmentServerVPath>
-          <IISUrl>http://www.dnndev.me/desktopmodules/mvc/Dnn_ProjektNeve_HelloWorld</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://www.dnndev.me</IISAppRootUrl>
+          <IISUrl>http://localhost:54951/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
