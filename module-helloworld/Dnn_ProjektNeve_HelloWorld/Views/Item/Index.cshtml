@@ -8,30 +8,172 @@
 <h2>Hello from PriceCalculator Module!</h2>
 <p>This is a test to check if the view is working.</p>
 
-@*<div id="Items-@Dnn.ModuleContext.ModuleId">
-    @if (Model.Count() == 0)
-    {
-        <p>@Dnn.LocalizeString("NoItems")</p>
+
+@*//kód, kezdő gomb választás*@
+<!--<style>
+    .konyvelo-kontener {
+        background-color: red !important;
     }
-    else
-    {
-        <ul class="tm_tl">
-            @foreach (var item in Model)
-            {
-                <li class="tm_t">
-                    <h3>@item.ItemName</h3>
-                    <div class="tm_td">@item.ItemDescription</div>
-                    @{
-                        if (Dnn.ModuleContext.IsEditable)
-                        {
-                            <div>
-                                <a href="@Url.Action("Edit", "Item", new {ctl = "Edit", itemId = item.ItemId})">@Dnn.LocalizeString("EditItem")</a>
-                                <a href="@Url.Action("Delete", "Item", new {itemId = item.ItemId})">@Dnn.LocalizeString("DeleteItem")</a>
-                            </div>
-                        }
-                    }
-                </li>
-            }
-        </ul>
+</style>
+
+
+<div class="konyvelo-kontener">
+    <h2>Üdvözöljük a Könyvelő Modulban!</h2>
+    <p>Kérjük, válasszon az alábbi lehetőségek közül:</p>
+
+    <div class="dnnActions">
+        <a href="@Url.Action("Konyveles", "Item")" class="btn-valaszto btn-konyveles">
+            Teljeskörű könyvelés
+        </a>
+
+        <a href="@Url.Action("Option2", "Item")" class="btn-valaszto btn-ber">
+            Bérszámfejtés
+        </a>
+    </div>
+</div>-->
+
+
+<style>
+    /* Fő konténer sötétkék háttérrel */
+    .calc-container {
+        background-color: #1a224a; /* Sötétkék háttér */
+        color: white;
+        padding: 40px;
+        border-radius: 10px;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: center;
     }
-</div>*@
+
+    .calc-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: left;
+    }
+
+    /* Lépésjelző (Stepper) */
+    .stepper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .step-number {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .step-active .step-number {
+        background-color: #f1b400;
+        color: #000;
+    }
+
+    .step-inactive .step-number {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .step-line {
+        width: 60px;
+        height: 2px;
+        background-color: #fff;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    /* Kártyák elrendezése */
+    .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* A kártya mint gomb */
+    .service-card {
+        background-color: #ecf3ff;
+        border: 2px solid #f1b400; /* Arany szegély */
+        border-radius: 15px;
+        width: 350px;
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none !important;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 15px;
+        background-color: #ccc; /* Ikon helykitöltő */
+        border-radius: 4px;
+    }
+
+    .card-text {
+        color: #1a224a;
+        font-size: 22px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="calc-container">
+    <div class="calc-title">Szolgáltatások és Árkalkulátor</div>
+
+    <div class="stepper">
+        <div class="step step-active">
+            <div class="step-number">1</div>
+            <span>Szolgáltatás kiválasztása</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step step-inactive">
+            <div class="step-number">2</div>
+            <span>Adatok megadása</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step step-inactive">
+            <div class="step-number">3</div>
+            <span>Ár megtekintése</span>
+        </div>
+    </div>
+
+    <div class="subtitle">Válassza ki a szolgáltatást</div>
+
+    <div class="card-container">
+        <a href="@Url.Action("Konyveles", "Item")" class="service-card">
+            <div class="card-icon" style="background: url('path-to-your-icon1.png') no-repeat center; background-size: contain;">
+            </div>
+            <div class="card-text">Teljes körű könyvelés</div>
+        </a>
+
+        <a href="@Url.Action("Option2", "Item")" class="service-card">
+            <div class="card-icon" style="background: url('path-to-your-icon2.png') no-repeat center; background-size: contain;">
+            </div>
+            <div class="card-text">Bérszámfejtés</div>
+        </a>
+    </div>
+</div>

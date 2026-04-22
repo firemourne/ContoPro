@@ -1,0 +1,39 @@
+/* A modulod egyedi tárolója (érdemes egyedi osztályt használni) */
+.konyvelo-kontener {
+    padding: 20px;
+    background-color: #add8e6; /* Light blue color */
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* A gombok stílusának felülírása */
+.btn-valaszto {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff !important; /* DNN miatt kellhet az !important */
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-konyveles {
+    background-color: #007bff;
+}
+
+    .btn-konyveles:hover {
+        background-color: #0056b3;
+    }
+
+.btn-ber {
+    background-color: #28a745;
+}
+
+    .btn-ber:hover {
+        background-color: #218838;
+    }
