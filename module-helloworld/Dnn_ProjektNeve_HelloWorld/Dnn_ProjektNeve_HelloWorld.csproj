@@ -154,6 +154,7 @@
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Settings\Settings.cshtml" />
     <Content Include="Views\Item\Konyveles.cshtml" />
+    <Content Include="Views\Item\Summary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,6 +18,7 @@ using ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Components;
 using ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Models;
 using System;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Web.Mvc;
 
 namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
@@ -85,9 +86,8 @@ namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
         }
 
 
-        // új kód geminiből
 
-
+        //Konyveles.cshtml megjelenítése
         [HttpGet]
         [ActionName("Konyveles")]
         public ActionResult Konyveles()
@@ -95,11 +95,84 @@ namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
             return View();
         }
 
-        // Új ablak/nézet a Bérszámfejtésnek
-        public ActionResult Option2()
+        //Summary.cshtml megjelenítese
+        [HttpGet]
+        [ActionName("Summary")]
+        public ActionResult Summary()
         {
+            // Nyers adatok kiolvasása az URL-ből
+            string nyersCeg = Request.QueryString["ceg"];
+            string nyersAdo = Request.QueryString["ado"];
+            string nyersBizonylat = Request.QueryString["bizonylat"];
+            string nyersLetszam = Request.QueryString["letszam"] ?? "0";
+            string nyersAfa = Request.QueryString["afa"];
+
+            // --- 2. SZÁMOLÁSI LOGIKA ---
+            double alapAr = 25000;
+
+            // Cégforma szorzó
+            double formaSzorzo = (nyersCeg == "kft") ? 1.6 : 1.0;
+
+            // Bizonylat felár
+            double bizonylatPlusz = 0;
+            if (nyersBizonylat == "21-50") bizonylatPlusz = 15000;
+            else if (nyersBizonylat == "51-100") bizonylatPlusz = 30000;
+            else if (nyersBizonylat == "100+") bizonylatPlusz = 60000;
+
+            // Alkalmazott felár (szövegből számmá alakítjuk)
+            int alkalmazottSzam = 0;
+            int.TryParse(nyersLetszam, out alkalmazottSzam);
+            double alkalmazottDij = alkalmazottSzam * 4000;
+
+            // ÁFA szorzó (pl. ha ÁFA körös, rászámolunk 27%-ot, azaz 1.27-tel szorozzuk)
+            double afaSzorzo = (nyersAfa == "afas") ? 1.27 : 1.0;
+
+            // VÉGSŐ ÁR KISZÁMÍTÁSA
+            double kalkulaltOsszeg = ((alapAr * formaSzorzo) + bizonylatPlusz + alkalmazottDij) * afaSzorzo;
+            ViewBag.VegsoAr = Math.Round(kalkulaltOsszeg);
+
+
+
+
+
+
+            // 1. Cégforma szépítése
+            ViewBag.Cegforma = (nyersCeg == "kft") ? "Kft. / Bt." : "Egyéni vállalkozó";
+
+            // 2. Adózási mód szépítése (Switch szerkezettel)
+            string szepAdo = "";
+            switch (nyersAdo)
+            {
+                case "ata": szepAdo = "Átalányadó"; break;
+                case "kata": szepAdo = "KATA"; break;
+                case "tao": szepAdo = "TAO (Társasági adó)"; break;
+                case "kiva": szepAdo = "KIVA"; break;
+                default: szepAdo = "Ismeretlen"; break;
+            }
+            ViewBag.Adozas = szepAdo;
+
+            // 3. Bizonylatszám szépítése
+            if (nyersBizonylat == "100+")
+            {
+                ViewBag.Bizonylat = "100 db felett";
+            }
+            else
+            {
+                ViewBag.Bizonylat = nyersBizonylat + " db";
+            }
+
+            // 4. Létszám (a "fő" szót a HTML-ben már odaírtuk, ide csak a szám kell)
+            ViewBag.Letszam = nyersLetszam;
+
+            // 5. ÁFA kör szépítése
+            ViewBag.Afa = (nyersAfa == "afas") ? "ÁFA körös (27%)" : "Alanyi Adómentes (AAM)";
+
             return View();
         }
+
+
+
+
 
     }
 }

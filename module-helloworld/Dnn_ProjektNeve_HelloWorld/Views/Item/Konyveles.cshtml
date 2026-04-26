@@ -1,98 +1,181 @@
 ﻿@*@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Models.Item>>*@
 @inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
 
-@using System.Text.RegularExpressions
-@using DotNetNuke.Web.Mvc.Helpers
+<style>
+    .calc-wrapper {
+        background-color: #1a224a;
+        color: white;
+        padding: 40px;
+        border-radius: 10px;
+        font-family: sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .calc-title {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        color: #f1b400;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 45px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #f1b400;
+        background-color: white;
+        color: black;
+        box-sizing: border-box;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background-color: #f1b400;
+        color: #1a224a;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+</style>
 
 
-@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
 
-<div class="calc-container" style="background-color: #1a224a; color: white; padding: 40px; border-radius: 10px; font-family: sans-serif; text-align: center; max-width: 600px; margin: 20px auto;">
+<div class="calc-wrapper">
+    <h2 class="calc-title">Szükséges adatok megadása</h2>
 
-    <h1 style="color: white; font-size: 28px; margin-bottom: 30px;">Szükséges adatok megadása</h1>
-
-    <div style="max-width: 450px; margin: 0 auto; text-align: left;">
-
-        <div style="margin-bottom: 20px;">
-            <label style="color: #f1b400; font-weight: bold; display: block; margin-bottom: 5px;">Vállalkozási forma</label>
-            <select id="cegforma" onchange="updateAdozas()"
-                    style="width: 100%; height: 45px !important; padding: 10px; border-radius: 5px; background-color: white !important; color: black !important; display: block !important; visibility: visible !important; opacity: 1 !important; border: 2px solid #f1b400;">
-                <option value="" disabled selected>Válasszon...</option>
-                <option value="egyeni">Egyéni vállalkozó</option>
-                <option value="kft">Kft. / Bt.</option>
-            </select>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <label style="color: #f1b400; font-weight: bold; display: block; margin-bottom: 5px;">Adózási mód</label>
-            <select id="adozas"
-                    style="width: 100%; height: 45px !important; padding: 10px; border-radius: 5px; background-color: white !important; color: black !important; display: block !important; visibility: visible !important; opacity: 1 !important; border: 2px solid #f1b400;">
-                <option value="" disabled selected>Válasszon formát előbb...</option>
-            </select>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <label style="color: #f1b400; font-weight: bold; display: block; margin-bottom: 5px;">Havi bizonylatszám</label>
-            <select id="bizonylat"
-                    style="width: 100%; height: 45px !important; padding: 10px; border-radius: 5px; background-color: white !important; color: black !important; display: block !important; visibility: visible !important; opacity: 1 !important; border: 2px solid #f1b400;">
-                <option value="" disabled selected>Válasszon...</option>
-                <option value="0-20">0 - 20 db</option>
-                <option value="21-50">21 - 50 db</option>
-                <option value="51-100">51 - 100 db</option>
-                <option value="100+">100 db felett</option>
-            </select>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <label style="color: #f1b400; font-weight: bold; display: block; margin-bottom: 5px;">Alkalmazottak száma</label>
-            <input type="number" id="letszam" value="0" min="0"
-                   style="width: 100%; height: 45px !important; padding: 10px; border-radius: 5px; background-color: white !important; color: black !important; display: block !important; visibility: visible !important; border: 2px solid #f1b400; box-sizing: border-box;">
-        </div>
-
-        <div style="margin-bottom: 30px;">
-            <label style="color: #f1b400; font-weight: bold; display: block; margin-bottom: 5px;">ÁFA kör</label>
-            <select id="afa"
-                    style="width: 100%; height: 45px !important; padding: 10px; border-radius: 5px; background-color: white !important; color: black !important; display: block !important; visibility: visible !important; opacity: 1 !important; border: 2px solid #f1b400;">
-                <option value="" disabled selected>Válasszon...</option>
-                <option value="alanyi">Alanyi Adómentes (AAM)</option>
-                <option value="afas">ÁFA körös (27%)</option>
-            </select>
-        </div>
-
-        <button type="button" onclick="szamolas()"
-                style="width: 100%; padding: 15px; background-color: #f1b400; color: #1a224a; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer;">
-            AJÁNLAT KÉRÉSE
-        </button>
-
-        <div id="eredmeny-box" style="display:none; margin-top: 20px; padding: 15px; border: 1px dashed #f1b400; text-align: center;">
-            <span id="eredmeny-text" style="color: #f1b400; font-weight: bold;"></span>
-        </div>
+    <div class="form-group">
+        <label class="form-label">Vállalkozási forma</label>
+        <select id="cegforma" class="form-control" onchange="updateAdozas()">
+            <option value="" disabled selected>Válasszon...</option>
+            <option value="egyeni">Egyéni vállalkozó</option>
+            <option value="kft">Kft. / Bt.</option>
+        </select>
     </div>
+
+    <div class="form-group">
+        <label class="form-label">Adózási mód</label>
+        <select id="adozas" class="form-control">
+            <option value="" disabled selected>Válasszon formát előbb...</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Havi bizonylatszám</label>
+        <select id="bizonylat" class="form-control">
+            <option value="" disabled selected>Válasszon...</option>
+            <option value="0-20">0 - 20 db</option>
+            <option value="21-50">21 - 50 db</option>
+            <option value="51-100">51 - 100 db</option>
+            <option value="100+">100 db felett</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Alkalmazottak száma</label>
+        <input type="number" id="letszam" class="form-control" value="0" min="0">
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">ÁFA kör</label>
+        <select id="afa" class="form-control">
+            <option value="" disabled selected>Válasszon...</option>
+            <option value="alanyi">Alanyi Adómentes (AAM)</option>
+            <option value="afas">ÁFA körös (27%)</option>
+        </select>
+    </div>
+
+    <a href="javascript:void(0);" onclick="Send()" class="service-card">
+        <div class="card-icon" style="background: url('path-to-your-icon2.png') no-repeat center; background-size: contain;">
+        </div>
+        <div class="card-text">Ajánlat kérése</div>
+    </a>
 </div>
 
-<script type="text/javascript">
+
+
+
+<script>
     function updateAdozas() {
-        var c = document.getElementById("cegforma").value;
-        var a = document.getElementById("adozas");
-        a.innerHTML = '<option value="" disabled selected>Válasszon...</option>';
-        var o = [];
-        if (c === "egyeni") {
-            o = [{ v: "ata", t: "Átalányadó" }, { v: "kata", t: "KATA" }, { v: "vsze", t: "VSZÉ" }];
-        } else if (c === "kft") {
-            o = [{ v: "tao", t: "TAO" }, { v: "kiva", t: "KIVA" }];
+        var formaSelect = document.getElementById("cegforma").value;
+        var adozasSelect = document.getElementById("adozas");
+
+        // Ürítjük a listát, és betesszük az alapértelmezett szöveget
+        adozasSelect.innerHTML = '<option value="" disabled selected>Válasszon...</option>';
+
+        var opciok = [];
+
+        // Logika: Mi jelenjen meg az adózásnál a választott forma alapján
+        if (formaSelect === "egyeni") {
+            opciok = [
+                { value: "ata", text: "Átalányadó" },
+                { value: "kata", text: "KATA" }
+            ];
+        } else if (formaSelect === "kft") {
+            opciok = [
+                { value: "tao", text: "TAO (Társasági adó)" },
+                { value: "kiva", text: "KIVA" }
+            ];
         }
-        o.forEach(function (opt) {
-            var el = document.createElement("option");
-            el.value = opt.v; el.text = opt.t;
-            a.appendChild(el);
-        });
+
+        // Feltöltjük az új opciókkal a második legördülőt
+        for (var i = 0; i < opciok.length; i++) {
+            var ujElem = document.createElement("option");
+            ujElem.value = opciok[i].value;
+            ujElem.text = opciok[i].text;
+            adozasSelect.appendChild(ujElem);
+        }
     }
 
-    function szamolas() {
-        if (!document.getElementById("cegforma").value || !document.getElementById("adozas").value) {
-            alert("Töltsön ki minden mezőt!"); return;
+    function Send() {
+        // 1. Kiszedjük az értékeket
+        var c = document.getElementById("cegforma").value;
+        var a = document.getElementById("adozas").value;
+        var b = document.getElementById("bizonylat").value;
+        var l = document.getElementById("letszam").value || 0;
+        var f = document.getElementById("afa").value;
+
+        // 2. Ellenőrzés
+        if (!c || !a || !b || !f) {
+            alert("Légyszi tölts ki minden mezőt!");
+            return;
         }
-        document.getElementById("eredmeny-box").style.display = "block";
-        document.getElementById("eredmeny-text").innerText = "Ajánlat kalkulálása folyamatban...";
+
+        // 3. Alap URL lekérése a DNN-től
+        var baseUrl = '@Url.Action("Summary", "Item")';
+
+        // 4. Kérdőjel vagy és-jel (biztonsági játék, ha a DNN eleve tesz bele paramétert)
+        var separator = baseUrl.indexOf('?') !== -1 ? '&' : '?';
+
+        var finalUrl = baseUrl + separator + "ceg=" + c + "&ado=" + a + "&bizonylat=" + b + "&letszam=" + l + "&afa=" + f;
+
+        // MEGÁLLÍTJUK A KÓDOT, HOGY LÁSSUK MIT CSINÁLT
+        alert("Ezt a linket raktam össze:\n" + finalUrl);
+
+        // Csak ezután engedjük tovább
+        window.location.href = finalUrl;
     }
+
+
+
+
+
+
+
 </script>

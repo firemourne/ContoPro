@@ -1,0 +1,22 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+
+
+
+<div class="summary-wrapper">
+    <h1 class="summary-title">Összegzés</h1>
+
+    <div class="summary-text">
+        <p>Vállalkozási forma: @ViewBag.Cegforma</p>
+        <p>Adózási mód: @ViewBag.Adozas</p>
+        <p>Havi bizonylatszám: @ViewBag.Bizonylat</p>
+        <p>Alkalmazottak száma: @ViewBag.Letszam fő</p>
+        <p>ÁFA kör: @ViewBag.Afa</p>
+    </div>
+
+    <div class="summary-price-box">
+        <p class="summary-price-label">A becsült havi könyvelési díj:</p>
+        <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
+    </div>
+
+
+</div>
