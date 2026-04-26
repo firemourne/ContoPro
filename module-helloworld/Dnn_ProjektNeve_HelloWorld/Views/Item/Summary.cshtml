@@ -2,7 +2,7 @@
 
 
 
-<div class="summary-wrapper">
+@*<div class="summary-wrapper">
     <h1 class="summary-title">Összegzés</h1>
 
     <div class="summary-text">
@@ -18,5 +18,146 @@
         <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
     </div>
 
+
+</div>*@
+
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+
+<style>
+    /* A wrapper 100%-os kitöltéssel */
+    .summary-wrapper {
+        background-color: #1a224a;
+        color: white;
+        padding: 40px;
+        border-radius: 10px;
+        font-family: sans-serif;
+        width: 100%;
+        box-sizing: border-box; /* Hogy a padding ne tolja ki a szélességet */
+        margin: 20px auto;
+    }
+
+    /* Progress Bar (Hasonló stílus, mint a könyvelésnél) */
+    .calc-progress {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+
+    .calc-step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .calc-circle {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #f1b400; /* Mind sárga, mert ez a végállomás */
+        color: #1a224a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .calc-step-text {
+        color: white;
+        font-size: 16px;
+        white-space: nowrap;
+    }
+
+    .calc-line {
+        flex-grow: 1;
+        height: 2px;
+        background-color: #f1b400;
+        margin: 0 20px;
+        min-width: 20px;
+    }
+
+    /* A te osztályaid formázása */
+    .summary-title {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .summary-text {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+        .summary-text p {
+            font-size: 18px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0;
+        }
+
+            .summary-text p:last-child {
+                border-bottom: none;
+            }
+
+    .summary-price-box {
+        text-align: center;
+        padding: 30px;
+        border: 2px dashed #f1b400;
+        border-radius: 8px;
+        background-color: rgba(241, 180, 0, 0.05);
+    }
+
+    .summary-price-label {
+        margin: 0;
+        font-size: 18px;
+        color: #ccc;
+    }
+
+    .summary-price-value {
+        margin: 10px 0 0 0;
+        color: #f1b400;
+        font-size: 42px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="summary-wrapper">
+
+    <div class="calc-progress">
+        <div class="calc-step">
+            <div class="calc-circle">1</div>
+            <div class="calc-step-text">Kezdőoldal</div>
+        </div>
+        <div class="calc-line"></div>
+        <div class="calc-step">
+            <div class="calc-circle">2</div>
+            <div class="calc-step-text">Adatok megadása</div>
+        </div>
+        <div class="calc-line"></div>
+        <div class="calc-step">
+            <div class="calc-circle">3</div>
+            <div class="calc-step-text">Ár és összegzés</div>
+        </div>
+    </div>
+
+    <h1 class="summary-title">Összegzés</h1>
+
+    <div class="summary-text">
+        <p>Vállalkozási forma: @ViewBag.Cegforma</p>
+        <p>Adózási mód: @ViewBag.Adozas</p>
+        <p>Havi bizonylatszám: @ViewBag.Bizonylat</p>
+        <p>Alkalmazottak száma: @ViewBag.Letszam fő</p>
+        <p>ÁFA kör: @ViewBag.Afa</p>
+    </div>
+
+    <div class="summary-price-box">
+        <p class="summary-price-label">A becsült havi könyvelési díj:</p>
+        <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
+    </div>
 
 </div>

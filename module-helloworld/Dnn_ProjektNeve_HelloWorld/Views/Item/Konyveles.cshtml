@@ -8,9 +8,57 @@
         padding: 40px;
         border-radius: 10px;
         font-family: sans-serif;
-        max-width: 600px;
+        max-width: 900px; /* <--- 600-ról 900-ra növelve, hogy széles legyen */
         margin: 20px auto;
     }
+
+    /* --- Progress Bar CSS Kezdete --- */
+    .calc-progress {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        padding: 0 20px; /* Kis extra margó kétoldalt */
+    }
+
+    .calc-step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .calc-circle {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: white;
+        color: #1a224a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+        flex-shrink: 0; /* Ne engedje összenyomni a kört */
+    }
+
+        .calc-circle.active {
+            background-color: #f1b400;
+        }
+
+    .calc-step-text {
+        color: white;
+        font-size: 16px;
+        white-space: nowrap; /* <--- Ez akadályozza meg, hogy több sorba törjön a szöveg! */
+    }
+
+    .calc-line {
+        flex-grow: 1;
+        min-width: 30px; /* <--- Garantálja, hogy mindig legyen legalább egy kis vonal */
+        height: 2px;
+        background-color: white;
+        margin: 0 20px;
+    }
+    /* --- Progress Bar CSS Vége --- */
 
     .calc-title {
         text-align: center;
@@ -42,6 +90,9 @@
     }
 
     .btn-submit {
+        display: block;
+        text-align: center;
+        text-decoration: none;
         width: 100%;
         padding: 15px;
         background-color: #f1b400;
@@ -51,13 +102,33 @@
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
-        margin-top: 10px;
+        margin-top: 30px;
+        box-sizing: border-box;
     }
+
+        .btn-submit:hover {
+            background-color: #e0a700;
+        }
 </style>
 
-
-
 <div class="calc-wrapper">
+
+    <div class="calc-progress">
+        <div class="calc-step">
+            <div class="calc-circle active">1</div>
+            <div class="calc-step-text">Kezdőoldal</div>
+        </div>
+        <div class="calc-line"></div>
+        <div class="calc-step">
+            <div class="calc-circle active">2</div>
+            <div class="calc-step-text">Adatok megadása</div>
+        </div>
+        <div class="calc-line"></div>
+        <div class="calc-step">
+            <div class="calc-circle">3</div>
+            <div class="calc-step-text">Ár és összegzés</div>
+        </div>
+    </div>
     <h2 class="calc-title">Szükséges adatok megadása</h2>
 
     <div class="form-group">
@@ -101,7 +172,7 @@
         </select>
     </div>
 
-    <a href="javascript:void(0);" onclick="Send()" class="service-card">
+    <a href="javascript:void(0);" onclick="Send()" class="btn-submit">
         <div class="card-icon" style="background: url('path-to-your-icon2.png') no-repeat center; background-size: contain;">
         </div>
         <div class="card-text">Ajánlat kérése</div>

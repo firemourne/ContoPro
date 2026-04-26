@@ -4,34 +4,6 @@
 @using DotNetNuke.Web.Mvc.Helpers
 
 
-<!-- Razor View (Index.cshtml) -->
-<h2>Hello from PriceCalculator Module!</h2>
-<p>This is a test to check if the view is working.</p>
-
-
-@*//kód, kezdő gomb választás*@
-<!--<style>
-    .konyvelo-kontener {
-        background-color: red !important;
-    }
-</style>
-
-
-<div class="konyvelo-kontener">
-    <h2>Üdvözöljük a Könyvelő Modulban!</h2>
-    <p>Kérjük, válasszon az alábbi lehetőségek közül:</p>
-
-    <div class="dnnActions">
-        <a href="@Url.Action("Konyveles", "Item")" class="btn-valaszto btn-konyveles">
-            Teljeskörű könyvelés
-        </a>
-
-        <a href="@Url.Action("Option2", "Item")" class="btn-valaszto btn-ber">
-            Bérszámfejtés
-        </a>
-    </div>
-</div>-->
-
 
 <style>
     /* Fő konténer sötétkék háttérrel */
@@ -142,12 +114,12 @@
 </style>
 
 <div class="calc-container">
-    <div class="calc-title">Szolgáltatások és Árkalkulátor</div>
+    <div class="calc-title">Személyre szabott árkalkulátor</div>
 
     <div class="stepper">
         <div class="step step-active">
             <div class="step-number">1</div>
-            <span>Szolgáltatás kiválasztása</span>
+            <span>Kezdőoldal</span>
         </div>
         <div class="step-line"></div>
         <div class="step step-inactive">
@@ -157,7 +129,7 @@
         <div class="step-line"></div>
         <div class="step step-inactive">
             <div class="step-number">3</div>
-            <span>Ár megtekintése</span>
+            <span>Ár és összegzés</span>
         </div>
     </div>
 
@@ -170,10 +142,6 @@
             <div class="card-text">Teljes körű könyvelés</div>
         </a>
 
-        <a href="@Url.Action("Option2", "Item")" class="service-card">
-            <div class="card-icon" style="background: url('path-to-your-icon2.png') no-repeat center; background-size: contain;">
-            </div>
-            <div class="card-text">Bérszámfejtés</div>
-        </a>
+       
     </div>
 </div>
