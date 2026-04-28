@@ -86,38 +86,37 @@
         width: 100%;
     }
 
-    .service-card {
-        background-color: #f1b400;
-        border: 2px solid #f1b400;
-        border-radius: 12px;
-        /* Kisebb méretek */
-        width: 220px;
-        height: 130px;
+    .btn-restart {
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        /* 240 helyett legyen mondjuk 80-100px, ez már tekintélyes, de nem foglalja el a fél képernyőt */
+        height: 85px;
+        background-color: #f1b400;
+        color: #1a224a !important; /* Sötétkék/fekete alaphelyzetben */
+        border: 2px solid #f1b400;
+        border-radius: 8px;
+        font-size: 22px;
+        font-weight: bold;
         cursor: pointer;
-        text-decoration: none !important;
-        transition: all 0.3s ease;
-        padding: 15px;
+        margin-top: 15px;
         box-sizing: border-box;
+        transition: 0.3s;
     }
 
-        .service-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-            background-color: #fff;
+        /* Hover állapot javítása */
+        .btn-restart:hover {
+            background-color: rgba(241, 180, 0, 0.1) !important;
+            color: #f1b400 !important; /* Itt kényszerítjük a sárga színt */
         }
 
-    .card-text {
-        color: #1a224a;
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 1.3;
-        /* Kényszerített tördelés 2-3 sorba */
-        display: block;
-    }
+        /* Ez a titkos összetevő: kényszerítjük a belső SPAN-t, hogy kövesse a szülőt */
+        .btn-restart .card-text {
+            color: inherit; /* Azt a színt kapja, amit a .btn-restart éppen diktál */
+            display: block;
+        }
 </style>
 
 <div class="calc-container">
@@ -146,7 +145,7 @@
     </div>
 
     <div class="card-container">
-        <a href="@Url.Action("Konyveles", "Item")" class="service-card">
+        <a href="@Url.Action("Konyveles", "Item")" class="btn-restart">
             <span class="card-text">
                 Kipróbálom!
             </span>

@@ -1,27 +1,23 @@
 ﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
 
-
-
-@*<div class="summary-wrapper">
-    <h1 class="summary-title">Összegzés</h1>
-
-    <div class="summary-text">
-        <p>Vállalkozási forma: @ViewBag.Cegforma</p>
-        <p>Adózási mód: @ViewBag.Adozas</p>
-        <p>Havi bizonylatszám: @ViewBag.Bizonylat</p>
-        <p>Alkalmazottak száma: @ViewBag.Letszam fő</p>
-        <p>ÁFA kör: @ViewBag.Afa</p>
-    </div>
-
-    <div class="summary-price-box">
-        <p class="summary-price-label">A becsült havi könyvelési díj:</p>
-        <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
-    </div>
-
-
-</div>*@
-
-@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+<script type="text/javascript">
+    // Ha a Sys még nem létezik, létrehozunk egy üres vázat, hogy ne dobjon hibát a dnn.jquery
+    if (typeof (Sys) === 'undefined') {
+        var Sys = {
+            Application: {
+                add_init: function () { },
+                notifyScriptLoaded: function () { }
+            },
+            WebForms: {
+                PageRequestManager: {
+                    getInstance: function () {
+                        return { add_endRequest: function () { } };
+                    }
+                }
+            }
+        };
+    }
+</script>
 
 <style>
     /* A wrapper 100%-os kitöltéssel */
@@ -126,6 +122,7 @@
     }
 
 
+    /* Közös stílus a nagy gomboknak */
 
 
     .btn-restart {
@@ -135,7 +132,7 @@
         width: 100%;
         padding: 15px;
         background-color: #f1b400;
-        color: #f1b400;
+        color: black;
         border: 2px solid #f1b400;
         border-radius: 5px;
         font-size: 18px;
@@ -148,7 +145,9 @@
 
         .btn-restart:hover {
             background-color: rgba(241, 180, 0, 0.1);
+            color: #f1b400
         }
+
 </style>
 
 <div class="summary-wrapper">
@@ -185,8 +184,36 @@
         <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
     </div>
 
+    <input type="hidden" id="vegsoAr" value="@ViewBag.VegsoAr" />
+
+    <button type="button" class="btn-restart" onclick="submitToCart()">
+        Kosár helyezés
+    </button>
+
     <a href="@Url.Action("Index", "Item")" class="btn-restart">
         Újrakezdés
     </a>
+
+    <script type="text/javascript">
+    function submitToCart() {
+        var ar = document.getElementById('vegsoAr').value;
+        var targetUrl = '@Url.Action("AddToCart", "Item")';
+
+        // Létrehozunk egy "láthatatlan" formot a JavaScriptben,
+        // ami kívül esik a DNN formján, így biztonságosan elküldhető
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = targetUrl;
+
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "vegsoAr";
+        input.value = ar;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+    </script>
 
 </div>

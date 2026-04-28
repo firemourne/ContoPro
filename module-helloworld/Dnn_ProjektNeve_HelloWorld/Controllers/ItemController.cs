@@ -20,6 +20,10 @@ using System;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Web.Mvc;
+using Hotcakes.Commerce;
+using Hotcakes.Commerce.Catalog;
+using Hotcakes.Commerce.Orders;
+using Hotcakes.Commerce.Dnn;
 
 namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
 {
@@ -122,7 +126,7 @@ namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
             // Alkalmazott felár (szövegből számmá alakítjuk)
             int alkalmazottSzam = 0;
             int.TryParse(nyersLetszam, out alkalmazottSzam);
-            double alkalmazottDij = alkalmazottSzam * 4000;
+            double alkalmazottDij = Math.Abs(alkalmazottSzam) * 4000;
 
             // ÁFA szorzó (pl. ha ÁFA körös, rászámolunk 27%-ot, azaz 1.27-tel szorozzuk)
             double afaSzorzo = (nyersAfa == "afas") ? 1.27 : 1.0;
@@ -172,6 +176,69 @@ namespace ProjektNeve.Dnn.Dnn_ProjektNeve_HelloWorld.Controllers
 
 
 
+        //kosárba gomb backend megvalósítása
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AddToCart(double vegsoAr)
+        {
+            //// 1. Hotcakes alkalmazás példányosítása a jelenlegi portálon
+            //var motor = HotcakesApplication.Current;
+
+            //// 2. A termék megkeresése (Használd a Hotcakes-ben megadott SKU-t!)
+            //var product = motor.CatalogServices.Products.FindBySku("TK1");
+
+            //if (product != null)
+            //{
+            //    // 3. LineItem létrehozása a termékből
+            //    var lineItem = product.ConvertToLineItem(motor, 1);
+
+            //    // 4. AZ ÁR FELÜLÍRÁSA - Itt adjuk át a kalkulált értéket
+            //    lineItem.BasePricePerItem = (decimal)vegsoAr;
+            //    lineItem.CustomProperties.Add("hcc", "priceoverridden", "1");
+
+            //    // VAGY próbáld meg így (ha a using Hotcakes.Commerce.Orders kint van):
+            //    // lineItem.IsPriceOverridden = true;
+
+            //    // 5. Kosárba rakás
+            //    var basket = motor.OrderServices.CurrentShoppingCart
+            //    motor.OrderServices.AddItemToOrder(basket, lineItem);
+
+            //    // 6. Átirányítás a kosárhoz
+            //    // Ha a RouteHccRelative nem megy, használd ezt a "fapados", de biztos utat:
+            //    return Redirect("/cart");
+            //}
+
+            var app = HotcakesApplication.Current;
+
+            var product = app.CatalogServices.Products.FindBySku("TK1");
+            if (product == null)
+                return RedirectToAction("Summary");
+
+            var lineItem = product.ConvertToLineItem(app, 1);
+
+            // ideiglenes, egyedi ár
+            lineItem.BasePricePerItem = (decimal)vegsoAr;
+            lineItem.AdjustedPricePerItem = (decimal)vegsoAr;
+            lineItem.LineTotal = (decimal)vegsoAr * lineItem.Quantity;
+
+            // fontos: így kell custom property-t írni
+            lineItem.CustomPropertySet("custom", "priceoverridden", "1");
+
+            // fontos: user supplied price esetén a Hotcakes külön árú tételként kezeli
+            lineItem.IsUserSuppliedPrice = true;
+
+            var basket = app.OrderServices.EnsureShoppingCart();
+
+            app.OrderServices.AddItemToOrder(basket, lineItem);
+
+            // EZ HIÁNYZOTT: mentés
+            app.OrderServices.Orders.Upsert(basket);
+            app.OrderServices.InvalidateCachedCart();
+
+            return Redirect("/HotcakesStore/Cart");
+        }
 
 
     }
