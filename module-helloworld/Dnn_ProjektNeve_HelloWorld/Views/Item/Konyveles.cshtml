@@ -226,12 +226,21 @@
         height: 50px;
         padding: 10px 15px;
         border-radius: 5px;
-        border: 2px solid #f1b400;
-        background-color: white;
-        color: black;
+        border: 2px solid #f1b400 !important;
+        background-color: white !important;
+        color: black !important;
         box-sizing: border-box;
         font-size: 16px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: textfield;
+        outline: none;
     }
+
+        .form-control:focus {
+            border-color: #f1b400 !important;
+            box-shadow: 0 0 5px rgba(241, 180, 0, 0.5);
+        }
 
     .btn-restart {
         display: block;
@@ -255,6 +264,10 @@
             background-color: rgba(241, 180, 0, 0.1);
             color: #f1b400
         }
+
+    .card-text{
+        color:black;
+    }
     
 
 
@@ -332,7 +345,7 @@
     <a href="javascript:void(0);" onclick="Send()" class="btn-restart">
         <div class="card-icon" style="background: url('path-to-your-icon2.png') no-repeat center; background-size: contain;">
         </div>
-        <div class="card-text">Ajánlat kérése</div>
+        <div class="">Ajánlat kérése</div>
     </a>
 
     <a href="@Url.Action("Index", "Item")" class="btn-restart">
