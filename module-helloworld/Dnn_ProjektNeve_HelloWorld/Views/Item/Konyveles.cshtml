@@ -58,6 +58,10 @@
         background-color: white;
         margin: 0 20px;
     }
+    .calc-line.active {
+        background-color: #f1b400;
+    }
+
     /* --- Progress Bar CSS Vége --- */
 
     .calc-title {
@@ -107,7 +111,29 @@
     }
 
         .btn-submit:hover {
-            background-color: #e0a700;
+            background-color: rgba(241, 180, 0, 0.1);
+        }
+
+    .btn-restart {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        padding: 15px;
+        background-color: #f1b400;
+        color: #f1b400;
+        border: 2px solid #f1b400;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+        .btn-restart:hover {
+            background-color: rgba(241, 180, 0, 0.1);
         }
 </style>
 
@@ -118,7 +144,7 @@
             <div class="calc-circle active">1</div>
             <div class="calc-step-text">Kezdőoldal</div>
         </div>
-        <div class="calc-line"></div>
+        <div class="calc-line active"></div>
         <div class="calc-step">
             <div class="calc-circle active">2</div>
             <div class="calc-step-text">Adatok megadása</div>
@@ -177,6 +203,13 @@
         </div>
         <div class="card-text">Ajánlat kérése</div>
     </a>
+
+    <a href="@Url.Action("Index", "Item")" class="btn-restart">
+        Újrakezdés
+    </a>
+
+
+
 </div>
 
 

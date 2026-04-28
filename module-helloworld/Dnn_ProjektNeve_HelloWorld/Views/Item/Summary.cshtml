@@ -124,6 +124,31 @@
         font-size: 42px;
         font-weight: bold;
     }
+
+
+
+
+    .btn-restart {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        padding: 15px;
+        background-color: #f1b400;
+        color: #f1b400;
+        border: 2px solid #f1b400;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+        .btn-restart:hover {
+            background-color: rgba(241, 180, 0, 0.1);
+        }
 </style>
 
 <div class="summary-wrapper">
@@ -159,5 +184,9 @@
         <p class="summary-price-label">A becsült havi könyvelési díj:</p>
         <h2 class="summary-price-value">@string.Format("{0:N0}", ViewBag.VegsoAr) Ft</h2>
     </div>
+
+    <a href="@Url.Action("Index", "Item")" class="btn-restart">
+        Újrakezdés
+    </a>
 
 </div>
